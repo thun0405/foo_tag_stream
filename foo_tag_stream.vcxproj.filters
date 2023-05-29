@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ソース ファイル\fb2k">
+      <UniqueIdentifier>{b451c3b7-7910-4d2b-ad11-4a1ab81feb41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\fb2k">
+      <UniqueIdentifier>{8559ed9a-728d-4155-8920-f30b169a7bad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="foo_tag_stream\PCH.cpp">
@@ -21,9 +27,21 @@
     <ClCompile Include="foo_tag_stream\main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="foo_tag_stream\contextmenu.cpp">
+      <Filter>ソース ファイル\fb2k</Filter>
+    </ClCompile>
+    <ClCompile Include="foo_tag_stream\initquit.cpp">
+      <Filter>ソース ファイル\fb2k</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="foo_tag_stream\stdafx.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="foo_tag_stream\contextmenu.h">
+      <Filter>ヘッダー ファイル\fb2k</Filter>
+    </ClInclude>
+    <ClInclude Include="foo_tag_stream\main.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

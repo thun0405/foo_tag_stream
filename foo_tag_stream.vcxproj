@@ -19,10 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="foo_tag_stream\contextmenu.cpp" />
+    <ClCompile Include="foo_tag_stream\initquit.cpp" />
     <ClCompile Include="foo_tag_stream\main.cpp" />
     <ClCompile Include="foo_tag_stream\PCH.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="foo_tag_stream\contextmenu.h" />
+    <ClInclude Include="foo_tag_stream\main.h" />
     <ClInclude Include="foo_tag_stream\stdafx.h" />
   </ItemGroup>
   <ItemGroup>
@@ -133,7 +137,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Create</PrecompiledHeader>
-      <AdditionalIncludeDirectories>..;../..;$(ProjectDir)modules\foobar2000;$(ProjectDir)modules</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..;../..;$(ProjectDir)modules\foobar2000;$(ProjectDir)modules;.</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(OutDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
