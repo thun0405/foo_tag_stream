@@ -19,25 +19,26 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h" />
+    <ClCompile Include="foo_tag_stream\main.cpp" />
+    <ClCompile Include="foo_tag_stream\PCH.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="PCH.cpp" />
+    <ClInclude Include="foo_tag_stream\stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="foobar2000\foobar2000_component_client\foobar2000_component_client.vcxproj">
+    <ProjectReference Include="modules\foobar2000\foobar2000_component_client\foobar2000_component_client.vcxproj">
       <Project>{71ad2674-065b-48f5-b8b0-e1f9d3892081}</Project>
     </ProjectReference>
-    <ProjectReference Include="foobar2000\helpers\foobar2000_sdk_helpers.vcxproj">
+    <ProjectReference Include="modules\foobar2000\helpers\foobar2000_sdk_helpers.vcxproj">
       <Project>{ee47764e-a202-4f85-a767-abdab4aff35f}</Project>
     </ProjectReference>
-    <ProjectReference Include="foobar2000\SDK\foobar2000_SDK.vcxproj">
+    <ProjectReference Include="modules\foobar2000\SDK\foobar2000_SDK.vcxproj">
       <Project>{e8091321-d79d-4575-86ef-064ea1a4a20d}</Project>
     </ProjectReference>
-    <ProjectReference Include="libPPUI\libPPUI.vcxproj">
+    <ProjectReference Include="modules\libPPUI\libPPUI.vcxproj">
       <Project>{7729eb82-4069-4414-964b-ad399091a03f}</Project>
     </ProjectReference>
-    <ProjectReference Include="pfc\pfc.vcxproj">
+    <ProjectReference Include="modules\pfc\pfc.vcxproj">
       <Project>{ebfffb4e-261d-44d3-b89c-957b31a0bf9c}</Project>
     </ProjectReference>
   </ItemGroup>
@@ -94,7 +95,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>packages\wtl.10.0.10320\lib\native\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)modules\wtl.10.0.10320\lib\native\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -132,13 +133,13 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Create</PrecompiledHeader>
-      <AdditionalIncludeDirectories>..;../..;foobar2000;.</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..;../..;$(ProjectDir)modules\foobar2000;$(ProjectDir)modules</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(OutDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>./foobar2000/shared/shared-$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(ProjectDir)modules\foobar2000\shared\shared-$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
