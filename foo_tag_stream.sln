@@ -33,6 +33,20 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "foobar2000_sdk_helpers", "f
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SDK", "SDK", "{71FA6127-5AB7-45A5-B1FF-75FE0B1FCF04}"
 EndProject
+Project("{911E67C6-3D85-4FCE-B560-20A9C3E3FF48}") = "foobar2000", "..\foobar2000_2.0\foobar2000.exe", "{1A34B495-3734-49B0-9B0F-0FC146A85691}"
+	ProjectSection(DebuggerProjectSystem) = preProject
+		PortSupplier = 00000000-0000-0000-0000-000000000000
+		Executable = C:\Users\puella_math\Development\Projects\foobar2000 components\foobar2000_2.0\foobar2000.exe
+		RemoteMachine = DESKTOP-4N4RRMU
+		StartingDirectory = C:\Users\puella_math\Development\Projects\foobar2000 components\foobar2000_2.0
+		Environment = 既定
+		LaunchingEngine = 00000000-0000-0000-0000-000000000000
+		UseLegacyDebugEngines = No
+		LaunchSQLEngine = No
+		AttachLaunchAction = No
+		IORedirection = Auto
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug FB2K|ARM64 = Debug FB2K|ARM64
@@ -245,6 +259,22 @@ Global
 		{EE47764E-A202-4F85-A767-ABDAB4AFF35F}.Release|x64.Build.0 = Release|x64
 		{EE47764E-A202-4F85-A767-ABDAB4AFF35F}.Release|x86.ActiveCfg = Release|Win32
 		{EE47764E-A202-4F85-A767-ABDAB4AFF35F}.Release|x86.Build.0 = Release|Win32
+		{1A34B495-3734-49B0-9B0F-0FC146A85691}.Debug FB2K|ARM64.ActiveCfg = Release|x64
+		{1A34B495-3734-49B0-9B0F-0FC146A85691}.Debug FB2K|ARM64EC.ActiveCfg = Release|x64
+		{1A34B495-3734-49B0-9B0F-0FC146A85691}.Debug FB2K|x64.ActiveCfg = Release|x64
+		{1A34B495-3734-49B0-9B0F-0FC146A85691}.Debug FB2K|x86.ActiveCfg = Release|x64
+		{1A34B495-3734-49B0-9B0F-0FC146A85691}.Debug|ARM64.ActiveCfg = Release|x64
+		{1A34B495-3734-49B0-9B0F-0FC146A85691}.Debug|ARM64EC.ActiveCfg = Release|x64
+		{1A34B495-3734-49B0-9B0F-0FC146A85691}.Debug|x64.ActiveCfg = Release|x64
+		{1A34B495-3734-49B0-9B0F-0FC146A85691}.Debug|x86.ActiveCfg = Release|x64
+		{1A34B495-3734-49B0-9B0F-0FC146A85691}.Release FB2K|ARM64.ActiveCfg = Release|x64
+		{1A34B495-3734-49B0-9B0F-0FC146A85691}.Release FB2K|ARM64EC.ActiveCfg = Release|x64
+		{1A34B495-3734-49B0-9B0F-0FC146A85691}.Release FB2K|x64.ActiveCfg = Release|x64
+		{1A34B495-3734-49B0-9B0F-0FC146A85691}.Release FB2K|x86.ActiveCfg = Release|x64
+		{1A34B495-3734-49B0-9B0F-0FC146A85691}.Release|ARM64.ActiveCfg = Release|x64
+		{1A34B495-3734-49B0-9B0F-0FC146A85691}.Release|ARM64EC.ActiveCfg = Release|x64
+		{1A34B495-3734-49B0-9B0F-0FC146A85691}.Release|x64.ActiveCfg = Release|x64
+		{1A34B495-3734-49B0-9B0F-0FC146A85691}.Release|x86.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
