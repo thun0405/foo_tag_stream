@@ -19,12 +19,18 @@
     <Filter Include="ヘッダー ファイル\fb2k">
       <UniqueIdentifier>{8559ed9a-728d-4155-8920-f30b169a7bad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\ui">
+      <UniqueIdentifier>{6c4e5601-414a-41b4-b981-281e64e45034}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\ui">
+      <UniqueIdentifier>{bce00ddb-d6a1-490f-9b77-8815c21abea6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="foo_tag_stream\PCH.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="foo_tag_stream\main.cpp">
+    <ClCompile Include="foo_tag_stream\foo_tag_stream.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="foo_tag_stream\contextmenu.cpp">
@@ -35,6 +41,9 @@
     </ClCompile>
     <ClCompile Include="foo_tag_stream\HelloWorld.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="foo_tag_stream\ui_dialog.cpp">
+      <Filter>ソース ファイル\ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -47,5 +56,16 @@
     <ClInclude Include="foo_tag_stream\HelloWorld.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="foo_tag_stream\ui_dialog.h">
+      <Filter>ヘッダー ファイル\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="foo_tag_stream.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

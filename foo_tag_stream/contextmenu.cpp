@@ -1,5 +1,8 @@
 #include "stdafx.h"
+
 #include "HelloWorld.h"
+#include "ui_dialog.h"
+
 
 // Identifier of our context menu group. Substitute with your own when reusing code.
 static const GUID guid_mygroup = { 0x143c290c, 0xf390, 0x4a7f, { 0xb6, 0x64, 0x5, 0xa, 0x35, 0x74, 0x67, 0xa } };
@@ -46,6 +49,7 @@ protected:
             break;
         case cmd_second:
             // Do something for the second command
+            ShowMyDialog();
             break;
         }
     }
