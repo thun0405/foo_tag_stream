@@ -33,15 +33,18 @@
     <ClCompile Include="foo_tag_stream\initquit.cpp">
       <Filter>ソース ファイル\fb2k</Filter>
     </ClCompile>
+    <ClCompile Include="foo_tag_stream\HelloWorld.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="foo_tag_stream\stdafx.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="foo_tag_stream\contextmenu.h">
-      <Filter>ヘッダー ファイル\fb2k</Filter>
-    </ClInclude>
     <ClInclude Include="foo_tag_stream\main.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="foo_tag_stream\HelloWorld.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -20,12 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="foo_tag_stream\contextmenu.cpp" />
+    <ClCompile Include="foo_tag_stream\HelloWorld.cpp" />
     <ClCompile Include="foo_tag_stream\initquit.cpp" />
     <ClCompile Include="foo_tag_stream\main.cpp" />
     <ClCompile Include="foo_tag_stream\PCH.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="foo_tag_stream\contextmenu.h" />
+    <ClInclude Include="foo_tag_stream\HelloWorld.h" />
     <ClInclude Include="foo_tag_stream\main.h" />
     <ClInclude Include="foo_tag_stream\stdafx.h" />
   </ItemGroup>
