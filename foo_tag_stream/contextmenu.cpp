@@ -42,7 +42,7 @@ protected:
         case cmd_first:
             // Do something for the first command
             HelloWorld helloWorld;
-            helloWorld.display();
+            helloWorld.display(p_data);
             break;
         case cmd_second:
             // Do something for the second command

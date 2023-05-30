@@ -2,5 +2,5 @@
 
 class HelloWorld {
 public:
-    void display();
+    void display(metadb_handle_list_cref p_data);
 };
