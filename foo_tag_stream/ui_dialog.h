@@ -7,8 +7,10 @@ class MyDialog : public CDialogImpl<MyDialog>
 {
 public:
     enum {
-        IDD = IDD_DIALOG1
+        IDD = IDD_DIALOG
     }; // ダイアログボックスのリソースID
+
+    MyDialog(const metadb_handle_list& tracks) : m_tracks(tracks) {}
 
     BEGIN_MSG_MAP(MyDialog)
         MESSAGE_HANDLER(WM_INITDIALOG, OnInitDialog)
@@ -19,6 +21,10 @@ public:
     LRESULT OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
     LRESULT OnOK(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
     LRESULT OnCancel(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
+
+private:
+    CListViewCtrl m_listView;
+    metadb_handle_list m_tracks;
 };
 
-void ShowMyDialog();
+void ShowMyDialog(metadb_handle_list m_tracks);

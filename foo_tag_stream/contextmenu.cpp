@@ -35,7 +35,7 @@ protected:
             out = "First command";
             break;
         case cmd_second:
-            out = "Second command";
+            out = "Show Dialog";
             break;
         }
     }
@@ -49,7 +49,7 @@ protected:
             break;
         case cmd_second:
             // Do something for the second command
-            ShowMyDialog();
+            ShowMyDialog(p_data);
             break;
         }
     }

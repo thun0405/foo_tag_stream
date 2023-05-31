@@ -50,7 +50,7 @@
     <ClInclude Include="foo_tag_stream\stdafx.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="foo_tag_stream\main.h">
+    <ClInclude Include="foo_tag_stream\foo_tag_stream.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="foo_tag_stream\HelloWorld.h">

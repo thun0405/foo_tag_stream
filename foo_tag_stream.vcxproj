@@ -28,7 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="foo_tag_stream\HelloWorld.h" />
-    <ClInclude Include="foo_tag_stream\main.h" />
+    <ClInclude Include="foo_tag_stream\foo_tag_stream.h" />
     <ClInclude Include="foo_tag_stream\stdafx.h" />
     <ClInclude Include="foo_tag_stream\ui_dialog.h" />
     <ClInclude Include="resource.h" />
