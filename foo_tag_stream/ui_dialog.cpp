@@ -8,6 +8,7 @@ LRESULT MyDialog::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 	m_listView = GetDlgItem(IDC_TRACKLIST);
 	m_okButton = GetDlgItem(IDOK);
 	m_cancelButton = GetDlgItem(IDCANCEL);
+
 	// ダイアログボックスの初期サイズを取得してm_sizeに設定
 	CRect rect;
 	GetClientRect(&rect);
@@ -44,22 +45,31 @@ LRESULT MyDialog::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 
 LRESULT MyDialog::OnSize(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, BOOL& /*bHandled*/)
 {
-	// サイズ変更後のダイアログボックスの幅と高さを取得
+	// 新しいダイアログボックスの幅と高さを取得
 	int newWidth = LOWORD(lParam);
 	int newHeight = HIWORD(lParam);
 
-	// サイズ変更前のダイアログボックスの幅と高さを取得
-	int oldWidth = m_size.cx;
-	int oldHeight = m_size.cy;
+	int diffWidth = newWidth - m_size.cx;
+	int diffHeight = newHeight - m_size.cy;
 
-	OnSizeListView(newWidth, newHeight, oldWidth, oldHeight);
-	OnSizeButton(newWidth, newHeight, oldWidth, oldHeight);
+	ListViewManager listViewManager = ListViewManager(m_listView, this);
+	ButtonManager okButtonManager = ButtonManager(m_okButton, this);
+	ButtonManager cancelButtonManager = ButtonManager(m_cancelButton, this);
 
-	// サイズ変更後のダイアログボックスの幅と高さを保存
-	m_size = CSize(newWidth, newHeight);
+	// リストビューコントロールのサイズを更新
+	listViewManager.UpdateSize(diffWidth, diffHeight);
+
+	// ボタンの位置を更新
+	okButtonManager.UpdatePosition(diffWidth, diffHeight);
+	cancelButtonManager.UpdatePosition(diffWidth, diffHeight);
+
+	// 新しいサイズを保存
+	m_size.cx = newWidth;
+	m_size.cy = newHeight;
 
 	return 0;
 }
+
 
 LRESULT MyDialog::OnGetMinMaxInfo(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, BOOL& /*bHandled*/)
 {
@@ -83,50 +93,6 @@ LRESULT MyDialog::OnCancel(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOO
 	return 0;
 }
 
-void MyDialog::OnSizeListView(int& newWidth, int& newHeight, int& oldWidth, int& oldHeight)
-{
-	// リストビューコントロールの現在の位置とサイズを取得
-	CRect rect;
-	m_listView.GetWindowRect(&rect);
-	ScreenToClient(&rect);
-
-	// 新しいリストビューコントロールの幅と高さを計算
-	int listViewWidth = rect.Width() + (newWidth - oldWidth);
-	int listViewHeight = rect.Height() + (newHeight - oldHeight);
-
-	// リストビューコントロールのサイズを変更
-	m_listView.SetWindowPos(NULL, 0, 0, listViewWidth, listViewHeight, SWP_NOZORDER | SWP_NOMOVE);
-
-	return;
-}
-void MyDialog::OnSizeButton(int& newWidth, int& newHeight, int& oldWidth, int& oldHeight)
-{
-	// ボタンの現在の位置とサイズを取得
-	CRect okButtonRect;
-	m_okButton.GetWindowRect(&okButtonRect);
-	ScreenToClient(&okButtonRect);
-
-	CRect cancelButtonRect;
-	m_cancelButton.GetWindowRect(&cancelButtonRect);
-	ScreenToClient(&cancelButtonRect);
-
-	// ボタンの新しい位置を計算
-	int okButtonX = newWidth - (oldWidth - okButtonRect.left);
-	int okButtonY = newHeight - (oldHeight - okButtonRect.top);
-
-	int cancelButtonX = newWidth - (oldWidth - cancelButtonRect.left);
-	int cancelButtonY = newHeight - (oldHeight - cancelButtonRect.top);
-
-	// ボタンの位置を更新
-	m_okButton.MoveWindow(okButtonX, okButtonY, okButtonRect.Width(), okButtonRect.Height(), TRUE);
-	m_cancelButton.MoveWindow(cancelButtonX, cancelButtonY, cancelButtonRect.Width(), cancelButtonRect.Height(), TRUE);
-
-	m_okButton.Invalidate();
-	m_cancelButton.Invalidate();
-
-	return;
-}
-
 void ShowMyDialog(metadb_handle_list m_tracks)
 {
 	MyDialog dlg(m_tracks);
@@ -135,3 +101,30 @@ void ShowMyDialog(metadb_handle_list m_tracks)
 	return;
 }
 
+void ListViewManager::UpdateSize(int diffWidth, int diffHeight) {
+	// 新しいリストビューコントロールの幅と高さを計算
+	int listViewWidth = m_currentSize.cx + diffWidth;
+	int listViewHeight = m_currentSize.cy + diffHeight;
+
+	// リストビューコントロールのサイズを変更
+	m_listView.MoveWindow(m_currentPosition.x, m_currentPosition.y, listViewWidth, listViewHeight, TRUE);
+	m_listView.Invalidate();
+
+	// 新しいサイズを保存
+	m_currentSize.cx = listViewWidth;
+	m_currentSize.cy = listViewHeight;
+}
+
+void ButtonManager::UpdatePosition(int diffWidth, int diffHeight) {
+	// ボタンの新しい位置を計算
+	int buttonX = diffWidth + m_currentPosition.x;
+	int buttonY = diffHeight + m_currentPosition.y;
+
+	// ボタンの位置を更新
+	m_button.MoveWindow(buttonX, buttonY, m_currentSize.cx, m_currentSize.cy, TRUE);
+	m_button.Invalidate();
+
+	// 新しい位置を保存
+	m_currentPosition.x = buttonX;
+	m_currentPosition.y = buttonY;
+}

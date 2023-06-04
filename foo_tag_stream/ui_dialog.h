@@ -34,9 +34,51 @@ private:
     CSize m_initialSize;
 
     metadb_handle_list m_tracks;
-
-    void OnSizeListView(int& newWidth, int& newHeight, int& oldWidth, int& oldHeight);
-    void OnSizeButton(int& newWidth, int& newHeight, int& oldWidth, int& oldHeight);
 };
 
 void ShowMyDialog(metadb_handle_list m_tracks);
+
+
+class ListViewManager {
+public:
+	ListViewManager(CListViewCtrl listView, CWindow* window)
+		: m_listView(listView)
+	{
+		// リストビューコントロールの現在の位置とサイズを取得
+		CRect rect;
+		m_listView.GetWindowRect(&rect);
+		window->ScreenToClient(&rect);
+
+		m_currentSize = rect.Size();
+		m_currentPosition = rect.TopLeft();
+	}
+
+	void UpdateSize(int diffWidth, int diffHeight);
+
+private:
+	CListViewCtrl m_listView;
+	CSize m_currentSize;
+	CPoint m_currentPosition;
+};
+
+class ButtonManager {
+public:
+	ButtonManager(CButton button, CWindow* window)
+		: m_button(button)
+	{
+		// ボタンの現在の位置とサイズを取得
+		CRect rect;
+		m_button.GetWindowRect(&rect);
+		window->ScreenToClient(&rect);
+
+		m_currentSize = rect.Size();
+		m_currentPosition = rect.TopLeft();
+	}
+
+	void UpdatePosition(int diffWidth, int diffHeight);
+
+private:
+	CButton m_button;
+	CSize m_currentSize;
+	CPoint m_currentPosition;
+};
