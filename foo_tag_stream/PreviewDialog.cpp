@@ -1,9 +1,54 @@
 #include "stdafx.h"
 #include "resource.h"
 
-#include "ui_dialog.h"
+#include "PreviewDialog.h"
 
-LRESULT MyDialog::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
+class ListViewManager {
+public:
+	ListViewManager(CListViewCtrl listView, CWindow* window)
+		: m_listView(listView)
+	{
+		// リストビューコントロールの現在の位置とサイズを取得
+		CRect rect;
+		m_listView.GetWindowRect(&rect);
+		window->ScreenToClient(&rect);
+
+		m_currentSize = rect.Size();
+		m_currentPosition = rect.TopLeft();
+	}
+
+	void UpdateSize(int diffWidth, int diffHeight);
+
+private:
+	CListViewCtrl m_listView;
+	CSize m_currentSize;
+	CPoint m_currentPosition;
+};
+
+class ButtonManager {
+public:
+	ButtonManager(CButton button, CWindow* window)
+		: m_button(button)
+	{
+		// ボタンの現在の位置とサイズを取得
+		CRect rect;
+		m_button.GetWindowRect(&rect);
+		window->ScreenToClient(&rect);
+
+		m_currentSize = rect.Size();
+		m_currentPosition = rect.TopLeft();
+	}
+
+	void UpdatePosition(int diffWidth, int diffHeight);
+
+private:
+	CButton m_button;
+	CSize m_currentSize;
+	CPoint m_currentPosition;
+};
+
+
+LRESULT PreviewDialog::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
 {
 	m_listView = GetDlgItem(IDC_TRACKLIST);
 	m_okButton = GetDlgItem(IDOK);
@@ -43,7 +88,7 @@ LRESULT MyDialog::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 	return TRUE;
 }
 
-LRESULT MyDialog::OnSize(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, BOOL& /*bHandled*/)
+LRESULT PreviewDialog::OnSize(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, BOOL& /*bHandled*/)
 {
 	// 新しいダイアログボックスの幅と高さを取得
 	int newWidth = LOWORD(lParam);
@@ -71,7 +116,7 @@ LRESULT MyDialog::OnSize(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, BOOL& 
 }
 
 
-LRESULT MyDialog::OnGetMinMaxInfo(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, BOOL& /*bHandled*/)
+LRESULT PreviewDialog::OnGetMinMaxInfo(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, BOOL& /*bHandled*/)
 {
 	MINMAXINFO* pMinMax = (MINMAXINFO*)lParam;
 	pMinMax->ptMinTrackSize.x = m_initialSize.cx;
@@ -80,13 +125,13 @@ LRESULT MyDialog::OnGetMinMaxInfo(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lPara
 	return 0;
 }
 
-LRESULT MyDialog::OnOK(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+LRESULT PreviewDialog::OnOK(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 {
 	// OKボタンが押されたときの処理をここに書く
 	EndDialog(wID);
 	return 0;
 }
-LRESULT MyDialog::OnCancel(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+LRESULT PreviewDialog::OnCancel(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 {
 	// キャンセルボタンが押されたときの処理をここに書く
 	EndDialog(wID);
@@ -95,7 +140,7 @@ LRESULT MyDialog::OnCancel(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOO
 
 void ShowMyDialog(metadb_handle_list m_tracks)
 {
-	MyDialog dlg(m_tracks);
+	PreviewDialog dlg(m_tracks);
 	dlg.DoModal();
 
 	return;

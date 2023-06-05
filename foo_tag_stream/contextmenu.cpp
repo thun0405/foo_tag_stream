@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
 #include "HelloWorld.h"
-#include "ui_dialog.h"
+#include "PreviewDialog.h"
 
 
 // Identifier of our context menu group. Substitute with your own when reusing code.
