@@ -3,7 +3,7 @@
 // foo_tag_stream.rc ‚ÅŽg—p
 //
 #define IDD_PREVIEW                     101
-#define IDD_Album                       103
+#define IDD_ALBUM                       103
 #define IDC_TRACKLIST                   1005
 #define IDC_EDIT                        1006
 
