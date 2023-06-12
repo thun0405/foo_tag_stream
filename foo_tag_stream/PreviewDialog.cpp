@@ -47,6 +47,19 @@ private:
 	CPoint m_currentPosition;
 };
 
+class file_info_filter_impl : public file_info_filter {
+public:
+	file_info_filter_impl(const file_info& source) : m_source(source) {}
+
+	bool apply_filter(trackRef p_location, t_filestats p_stats, file_info& p_info) override {
+		p_info = m_source;
+		return true;
+	}
+
+private:
+	const file_info& m_source;
+};
+
 
 LRESULT PreviewDialog::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
 {
@@ -81,7 +94,14 @@ LRESULT PreviewDialog::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*l
 		if (track->get_info_async(info)) {
 			m_listView.InsertItem(i, pfc::stringcvt::string_os_from_utf8(info.meta_get("TITLE", 0)));
 			m_listView.SetItemText(i, 1, pfc::stringcvt::string_os_from_utf8(info.meta_get("ARTIST", 0)));
-			m_listView.SetItemText(i, 2, pfc::stringcvt::string_os_from_utf8(info.meta_get("ALBUM", 0)));
+
+			// アルバム名が入力されていればそれを使用し、そうでなければ元のアルバム名を使用します。
+			if (!m_albumName.is_empty()) {
+				m_listView.SetItemText(i, 2, pfc::stringcvt::string_os_from_utf8(m_albumName));
+			}
+			else {
+				m_listView.SetItemText(i, 2, pfc::stringcvt::string_os_from_utf8(info.meta_get("ALBUM", 0)));
+			}
 		}
 	}
 
@@ -128,9 +148,38 @@ LRESULT PreviewDialog::OnGetMinMaxInfo(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM 
 LRESULT PreviewDialog::OnOK(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 {
 	// OKボタンが押されたときの処理をここに書く
+	// ここでは、リストビューに表示されているデータを元にメタデータを更新する
+	for (size_t i = 0; i < m_tracks.get_count(); ++i) {
+		const metadb_handle_ptr& track = m_tracks[i];
+		file_info_impl info;
+		if (track->get_info_async(info)) {
+			wchar_t buffer[256];
+
+			m_listView.GetItemText(i, 0, buffer, sizeof(buffer) / sizeof(wchar_t));
+			pfc::string8 title = pfc::stringcvt::string_utf8_from_os(buffer).get_ptr();
+
+			m_listView.GetItemText(i, 1, buffer, sizeof(buffer) / sizeof(wchar_t));
+			pfc::string8 artist = pfc::stringcvt::string_utf8_from_os(buffer).get_ptr();
+
+			m_listView.GetItemText(i, 2, buffer, sizeof(buffer) / sizeof(wchar_t));
+			pfc::string8 album = pfc::stringcvt::string_utf8_from_os(buffer).get_ptr();
+
+			info.meta_set("TITLE", title);
+			info.meta_set("ARTIST", artist);
+			info.meta_set("ALBUM", album);
+
+			metadb_handle_list trackList;
+			trackList.add_item(track);
+
+			service_ptr_t<file_info_filter> filter = new service_impl_t<file_info_filter_impl>(info);
+			static_api_ptr_t<metadb_io_v2>()->update_info_async(trackList, filter, 0, NULL, completion_notify_ptr());
+		}
+	}
+
 	EndDialog(wID);
 	return 0;
 }
+
 LRESULT PreviewDialog::OnCancel(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 {
 	// キャンセルボタンが押されたときの処理をここに書く
@@ -138,9 +187,9 @@ LRESULT PreviewDialog::OnCancel(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/
 	return 0;
 }
 
-void ShowMyDialog(metadb_handle_list m_tracks)
+void ShowPreviewDialog(metadb_handle_list m_tracks, pfc::string8 albumName)
 {
-	PreviewDialog dlg(m_tracks);
+	PreviewDialog dlg(m_tracks, albumName);
 	dlg.DoModal();
 
 	return;

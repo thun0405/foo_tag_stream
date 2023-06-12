@@ -3,7 +3,7 @@
 #include "stdafx.h"
 #include "resource.h"
 
-class AlbumDialog : CDialogImpl<AlbumDialog>
+class AlbumDialog : public CDialogImpl<AlbumDialog>
 {
 public:
     enum {
@@ -32,3 +32,5 @@ private:
 
     metadb_handle_list m_tracks;
 };
+
+void ShowAlbumDialog(metadb_handle_list_cref p_data);

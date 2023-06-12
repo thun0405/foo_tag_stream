@@ -12,6 +12,10 @@ public:
 
     PreviewDialog(const metadb_handle_list& tracks) : m_tracks(tracks) {}
 
+    // コンストラクタにアルバム名を追加
+    PreviewDialog(const metadb_handle_list& tracks, const pfc::string8& albumName) : m_tracks(tracks), m_albumName(albumName) {}
+
+
     BEGIN_MSG_MAP(PreviewDialog)
         MESSAGE_HANDLER(WM_INITDIALOG, OnInitDialog)
         MESSAGE_HANDLER(WM_SIZE, OnSize)
@@ -35,6 +39,8 @@ private:
     CSize m_initialSize;
 
     metadb_handle_list m_tracks;
+    // アルバム名を保持するメンバ変数を追加
+    pfc::string8 m_albumName;
 };
 
-void ShowMyDialog(metadb_handle_list m_tracks);
+void ShowPreviewDialog(metadb_handle_list m_tracks, pfc::string8 albumName);
