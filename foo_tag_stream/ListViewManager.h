@@ -1,5 +1,6 @@
 #pragma once
 #include "stdafx.h"
+#include "TrackMetadata.h"
 
 class ListViewManager {
 public:
@@ -8,6 +9,7 @@ public:
     void InitializeListView();
     void UpdateSize(int diffWidth, int diffHeight);
     void PopulateListView(const metadb_handle_list& tracks, const pfc::string8& albumName);
+    TrackMetadata GetTrackMetadata(int index);
 
 private:
     CListViewCtrl m_listView;

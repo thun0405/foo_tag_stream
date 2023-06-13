@@ -53,3 +53,19 @@ void ListViewManager::PopulateListView(const metadb_handle_list& tracks, const p
         }
     }
 }
+
+TrackMetadata ListViewManager::GetTrackMetadata(int index) {
+    wchar_t buffer[256];
+
+    m_listView.GetItemText(index, 0, buffer, sizeof(buffer) / sizeof(wchar_t));
+    pfc::string8 title = pfc::stringcvt::string_utf8_from_os(buffer).get_ptr();
+
+    m_listView.GetItemText(index, 1, buffer, sizeof(buffer) / sizeof(wchar_t));
+    pfc::string8 artist = pfc::stringcvt::string_utf8_from_os(buffer).get_ptr();
+
+    m_listView.GetItemText(index, 2, buffer, sizeof(buffer) / sizeof(wchar_t));
+    pfc::string8 album = pfc::stringcvt::string_utf8_from_os(buffer).get_ptr();
+
+    return TrackMetadata(title, artist, album);
+}
+

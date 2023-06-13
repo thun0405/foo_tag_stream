@@ -79,26 +79,18 @@ LRESULT PreviewDialog::OnGetMinMaxInfo(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM 
 
 LRESULT PreviewDialog::OnOK(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 {
+	ListViewManager listViewManager = ListViewManager(m_listView, this);
 	// OKボタンが押されたときの処理をここに書く
 	// ここでは、リストビューに表示されているデータを元にメタデータを更新する
 	for (size_t i = 0; i < m_tracks.get_count(); ++i) {
 		const metadb_handle_ptr& track = m_tracks[i];
 		file_info_impl info;
 		if (track->get_info_async(info)) {
-			wchar_t buffer[256];
+			TrackMetadata metadata = listViewManager.GetTrackMetadata(i);
 
-			m_listView.GetItemText(i, 0, buffer, sizeof(buffer) / sizeof(wchar_t));
-			pfc::string8 title = pfc::stringcvt::string_utf8_from_os(buffer).get_ptr();
-
-			m_listView.GetItemText(i, 1, buffer, sizeof(buffer) / sizeof(wchar_t));
-			pfc::string8 artist = pfc::stringcvt::string_utf8_from_os(buffer).get_ptr();
-
-			m_listView.GetItemText(i, 2, buffer, sizeof(buffer) / sizeof(wchar_t));
-			pfc::string8 album = pfc::stringcvt::string_utf8_from_os(buffer).get_ptr();
-
-			info.meta_set("TITLE", title);
-			info.meta_set("ARTIST", artist);
-			info.meta_set("ALBUM", album);
+			info.meta_set("TITLE", metadata.GetTitle());
+			info.meta_set("ARTIST", metadata.GetArtist());
+			info.meta_set("ALBUM", metadata.GetAlbum());
 
 			metadb_handle_list trackList;
 			trackList.add_item(track);
