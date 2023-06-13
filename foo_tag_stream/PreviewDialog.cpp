@@ -1,51 +1,8 @@
 #include "stdafx.h"
 #include "resource.h"
-
 #include "PreviewDialog.h"
-
-class ListViewManager {
-public:
-	ListViewManager(CListViewCtrl listView, CWindow* window)
-		: m_listView(listView)
-	{
-		// リストビューコントロールの現在の位置とサイズを取得
-		CRect rect;
-		m_listView.GetWindowRect(&rect);
-		window->ScreenToClient(&rect);
-
-		m_currentSize = rect.Size();
-		m_currentPosition = rect.TopLeft();
-	}
-
-	void UpdateSize(int diffWidth, int diffHeight);
-
-private:
-	CListViewCtrl m_listView;
-	CSize m_currentSize;
-	CPoint m_currentPosition;
-};
-
-class ButtonManager {
-public:
-	ButtonManager(CButton button, CWindow* window)
-		: m_button(button)
-	{
-		// ボタンの現在の位置とサイズを取得
-		CRect rect;
-		m_button.GetWindowRect(&rect);
-		window->ScreenToClient(&rect);
-
-		m_currentSize = rect.Size();
-		m_currentPosition = rect.TopLeft();
-	}
-
-	void UpdatePosition(int diffWidth, int diffHeight);
-
-private:
-	CButton m_button;
-	CSize m_currentSize;
-	CPoint m_currentPosition;
-};
+#include "ListViewManager.h"
+#include "ButtonManager.h"
 
 class file_info_filter_impl : public file_info_filter {
 public:
@@ -60,6 +17,8 @@ private:
 	const file_info& m_source;
 };
 
+PreviewDialog::PreviewDialog(metadb_handle_list_cref tracks, const pfc::string8& albumName)
+	: m_tracks(tracks), m_albumName(albumName) {}
 
 LRESULT PreviewDialog::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
 {
@@ -73,37 +32,10 @@ LRESULT PreviewDialog::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*l
 	m_size = rect.Size();
 	m_initialSize = rect.Size();
 
-	// ボタンの現在の位置とサイズを取得
-	CRect okButtonRect;
-	m_okButton.GetWindowRect(&okButtonRect);
-	ScreenToClient(&okButtonRect);
+	ListViewManager listViewManager = ListViewManager(m_listView, this);
 
-	CRect cancelButtonRect;
-	m_cancelButton.GetWindowRect(&cancelButtonRect);
-	ScreenToClient(&cancelButtonRect);
-
-	// カラムを追加
-	m_listView.InsertColumn(0, _T("Title"), LVCFMT_LEFT, 200);
-	m_listView.InsertColumn(1, _T("Artist"), LVCFMT_LEFT, 200);
-	m_listView.InsertColumn(2, _T("Album"), LVCFMT_LEFT, 200);
-
-	// 選択したトラックの情報を取得し、リストビューに追加します。
-	for (size_t i = 0; i < m_tracks.get_count(); ++i) {
-		const metadb_handle_ptr& track = m_tracks[i];
-		file_info_impl info;
-		if (track->get_info_async(info)) {
-			m_listView.InsertItem(i, pfc::stringcvt::string_os_from_utf8(info.meta_get("TITLE", 0)));
-			m_listView.SetItemText(i, 1, pfc::stringcvt::string_os_from_utf8(info.meta_get("ARTIST", 0)));
-
-			// アルバム名が入力されていればそれを使用し、そうでなければ元のアルバム名を使用します。
-			if (!m_albumName.is_empty()) {
-				m_listView.SetItemText(i, 2, pfc::stringcvt::string_os_from_utf8(m_albumName));
-			}
-			else {
-				m_listView.SetItemText(i, 2, pfc::stringcvt::string_os_from_utf8(info.meta_get("ALBUM", 0)));
-			}
-		}
-	}
+	listViewManager.InitializeListView();
+	listViewManager.PopulateListView(m_tracks, m_albumName);
 
 	return TRUE;
 }
@@ -193,32 +125,4 @@ void ShowPreviewDialog(metadb_handle_list m_tracks, pfc::string8 albumName)
 	dlg.DoModal();
 
 	return;
-}
-
-void ListViewManager::UpdateSize(int diffWidth, int diffHeight) {
-	// 新しいリストビューコントロールの幅と高さを計算
-	int listViewWidth = m_currentSize.cx + diffWidth;
-	int listViewHeight = m_currentSize.cy + diffHeight;
-
-	// リストビューコントロールのサイズを変更
-	m_listView.MoveWindow(m_currentPosition.x, m_currentPosition.y, listViewWidth, listViewHeight, TRUE);
-	m_listView.Invalidate();
-
-	// 新しいサイズを保存
-	m_currentSize.cx = listViewWidth;
-	m_currentSize.cy = listViewHeight;
-}
-
-void ButtonManager::UpdatePosition(int diffWidth, int diffHeight) {
-	// ボタンの新しい位置を計算
-	int buttonX = diffWidth + m_currentPosition.x;
-	int buttonY = diffHeight + m_currentPosition.y;
-
-	// ボタンの位置を更新
-	m_button.MoveWindow(buttonX, buttonY, m_currentSize.cx, m_currentSize.cy, TRUE);
-	m_button.Invalidate();
-
-	// 新しい位置を保存
-	m_currentPosition.x = buttonX;
-	m_currentPosition.y = buttonY;
 }

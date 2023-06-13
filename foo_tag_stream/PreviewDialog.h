@@ -6,15 +6,9 @@
 class PreviewDialog : public CDialogImpl<PreviewDialog>
 {
 public:
-    enum {
-        IDD = IDD_PREVIEW
-    }; // ダイアログボックスのリソースID
+    enum { IDD = IDD_PREVIEW };
 
-    PreviewDialog(const metadb_handle_list& tracks) : m_tracks(tracks) {}
-
-    // コンストラクタにアルバム名を追加
-    PreviewDialog(const metadb_handle_list& tracks, const pfc::string8& albumName) : m_tracks(tracks), m_albumName(albumName) {}
-
+    PreviewDialog(metadb_handle_list_cref tracks, const pfc::string8& albumName);
 
     BEGIN_MSG_MAP(PreviewDialog)
         MESSAGE_HANDLER(WM_INITDIALOG, OnInitDialog)
@@ -24,23 +18,20 @@ public:
         COMMAND_ID_HANDLER(IDCANCEL, OnCancel)
     END_MSG_MAP()
 
-    LRESULT OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
-    LRESULT OnSize(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, BOOL& /*bHandled*/);
-    LRESULT OnGetMinMaxInfo(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, BOOL& /*bHandled*/);
-    LRESULT OnOK(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
-    LRESULT OnCancel(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
-
 private:
+    LRESULT OnInitDialog(UINT, WPARAM, LPARAM, BOOL&);
+    LRESULT OnSize(UINT, WPARAM, LPARAM, BOOL&);
+    LRESULT OnGetMinMaxInfo(UINT, WPARAM, LPARAM, BOOL&);
+    LRESULT OnOK(WORD, WORD, HWND, BOOL&);
+    LRESULT OnCancel(WORD, WORD, HWND, BOOL&);
+
+    metadb_handle_list m_tracks;
+    pfc::string8 m_albumName;
     CListViewCtrl m_listView;
     CButton m_okButton;
     CButton m_cancelButton;
-
     CSize m_size;
     CSize m_initialSize;
-
-    metadb_handle_list m_tracks;
-    // アルバム名を保持するメンバ変数を追加
-    pfc::string8 m_albumName;
 };
 
 void ShowPreviewDialog(metadb_handle_list m_tracks, pfc::string8 albumName);

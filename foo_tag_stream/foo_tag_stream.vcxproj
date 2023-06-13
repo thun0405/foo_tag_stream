@@ -20,18 +20,22 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AlbumDialog.cpp" />
+    <ClCompile Include="ButtonManager.cpp" />
     <ClCompile Include="contextmenu.cpp" />
     <ClCompile Include="foo_tag_stream.cpp" />
     <ClCompile Include="HelloWorld.cpp" />
     <ClCompile Include="initquit.cpp" />
+    <ClCompile Include="ListViewManager.cpp" />
     <ClCompile Include="PCH.cpp" />
     <ClCompile Include="PreviewDialog.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AlbumDialog.h" />
+    <ClInclude Include="ButtonManager.h" />
     <ClInclude Include="foo_tag_stream.h" />
     <ClInclude Include="Guids.h" />
     <ClInclude Include="HelloWorld.h" />
+    <ClInclude Include="ListViewManager.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="PreviewDialog.h" />
