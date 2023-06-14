@@ -11,13 +11,19 @@ ListViewManager::ListViewManager(CListViewCtrl listView, CWindow* window)
 
     m_currentSize = rect.Size();
     m_currentPosition = rect.TopLeft();
+
+    m_columns.push_back({ _T("#"), 30, [](int index, const file_info_impl& info) { return pfc::string8(pfc::format_int(index + 1)); } });
+    m_columns.push_back({ _T("Title"), 200, [](int index, const file_info_impl& info) { return info.meta_get("TITLE", 0); } });
+    m_columns.push_back({ _T("Artist"), 200, [](int index, const file_info_impl& info) { return info.meta_get("ARTIST", 0); } });
+    m_columns.push_back({ _T("Album"), 200, [](int index, const file_info_impl& info) { return info.meta_get("ALBUM", 0); } });
 }
 
 void ListViewManager::InitializeListView() {
     // カラムを追加
-    m_listView.InsertColumn(0, _T("Title"), LVCFMT_LEFT, COLUMN_WIDTH);
-    m_listView.InsertColumn(1, _T("Artist"), LVCFMT_LEFT, COLUMN_WIDTH);
-    m_listView.InsertColumn(2, _T("Album"), LVCFMT_LEFT, COLUMN_WIDTH);
+    for (size_t i = 0; i < m_columns.size(); ++i) {
+        const ColumnInfo& column = m_columns[i];
+        m_listView.InsertColumn(i, column.name, LVCFMT_LEFT, column.width);
+    }
 }
 
 void ListViewManager::UpdateSize(int diffWidth, int diffHeight) {
@@ -35,37 +41,40 @@ void ListViewManager::UpdateSize(int diffWidth, int diffHeight) {
 }
 
 void ListViewManager::PopulateListView(const metadb_handle_list& tracks, const pfc::string8& albumName) {
-    // 選択したトラックの情報を取得し、リストビューに追加します。
     for (size_t i = 0; i < tracks.get_count(); ++i) {
         const metadb_handle_ptr& track = tracks[i];
         file_info_impl info;
         if (track->get_info_async(info)) {
-            m_listView.InsertItem(i, pfc::stringcvt::string_os_from_utf8(info.meta_get("TITLE", 0)));
-            m_listView.SetItemText(i, 1, pfc::stringcvt::string_os_from_utf8(info.meta_get("ARTIST", 0)));
+            // Insert a new item for the first column
+            const ColumnInfo& firstColumn = m_columns[0];
+            pfc::string8 firstData = firstColumn.dataGetter(i, info);
+            m_listView.InsertItem(i, pfc::stringcvt::string_os_from_utf8(firstData));
 
-            // アルバム名が入力されていればそれを使用し、そうでなければ元のアルバム名を使用します。
-            if (!albumName.is_empty()) {
-                m_listView.SetItemText(i, 2, pfc::stringcvt::string_os_from_utf8(albumName));
-            }
-            else {
-                m_listView.SetItemText(i, 2, pfc::stringcvt::string_os_from_utf8(info.meta_get("ALBUM", 0)));
+            // Set the text for the remaining columns
+            for (int j = 1; j < m_columns.size(); ++j) {
+                const ColumnInfo& column = m_columns[j];
+                pfc::string8 data = column.dataGetter(i, info);
+                m_listView.SetItemText(i, j, pfc::stringcvt::string_os_from_utf8(data));
             }
         }
     }
 }
 
+
 TrackMetadata ListViewManager::GetTrackMetadata(int index) {
     wchar_t buffer[256];
 
     m_listView.GetItemText(index, 0, buffer, sizeof(buffer) / sizeof(wchar_t));
-    pfc::string8 title = pfc::stringcvt::string_utf8_from_os(buffer).get_ptr();
+    int number = _wtoi(buffer);  // Convert string to integer
 
     m_listView.GetItemText(index, 1, buffer, sizeof(buffer) / sizeof(wchar_t));
-    pfc::string8 artist = pfc::stringcvt::string_utf8_from_os(buffer).get_ptr();
+    pfc::string8 title = pfc::stringcvt::string_utf8_from_os(buffer).get_ptr();
 
     m_listView.GetItemText(index, 2, buffer, sizeof(buffer) / sizeof(wchar_t));
+    pfc::string8 artist = pfc::stringcvt::string_utf8_from_os(buffer).get_ptr();
+
+    m_listView.GetItemText(index, 3, buffer, sizeof(buffer) / sizeof(wchar_t));
     pfc::string8 album = pfc::stringcvt::string_utf8_from_os(buffer).get_ptr();
 
-    return TrackMetadata(title, artist, album);
+    return TrackMetadata(number, title, artist, album);
 }
-

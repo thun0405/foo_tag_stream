@@ -1,14 +1,22 @@
 #pragma once
-#include "stdafx.h"
+#include <pfc/pfc.h>
 
 class TrackMetadata {
 public:
-    TrackMetadata(const pfc::string8& title, const pfc::string8& artist, const pfc::string8& album);
-    const pfc::string8& GetTitle() const;
-    const pfc::string8& GetArtist() const;
-    const pfc::string8& GetAlbum() const;
+    TrackMetadata(
+        int number,
+        pfc::string8 title,
+        pfc::string8 artist,
+        pfc::string8 album
+    );
+
+    int GetNumber() const;
+    pfc::string8 GetTitle() const;
+    pfc::string8 GetArtist() const;
+    pfc::string8 GetAlbum() const;
 
 private:
+    int m_number;
     pfc::string8 m_title;
     pfc::string8 m_artist;
     pfc::string8 m_album;

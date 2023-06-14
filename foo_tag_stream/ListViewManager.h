@@ -4,6 +4,12 @@
 
 class ListViewManager {
 public:
+    struct ColumnInfo {
+        const TCHAR* name;
+        int width;
+        std::function<pfc::string8(int, const file_info_impl&)> dataGetter;
+    };
+
     ListViewManager(CListViewCtrl listView, CWindow* window);
 
     void InitializeListView();
@@ -13,8 +19,7 @@ public:
 
 private:
     CListViewCtrl m_listView;
+    std::vector<ColumnInfo> m_columns;
     CSize m_currentSize;
     CPoint m_currentPosition;
-
-    static const int COLUMN_WIDTH = 200;
 };
