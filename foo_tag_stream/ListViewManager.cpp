@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "ListViewManager.h"
 
-ListViewManager::ListViewManager(CListViewCtrl listView, CWindow* window)
+ListViewManager::ListViewManager(CListViewCtrl& listView, CWindow* window)
     : m_listView(listView)
 {
     // リストビューコントロールの現在の位置とサイズを取得

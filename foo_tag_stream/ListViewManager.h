@@ -10,7 +10,7 @@ public:
         std::function<pfc::string8(int, const file_info_impl&)> dataGetter;
     };
 
-    ListViewManager(CListViewCtrl listView, CWindow* window);
+    ListViewManager(CListViewCtrl& listView, CWindow* window);
 
     void InitializeListView();
     void UpdateSize(int diffWidth, int diffHeight);
@@ -18,7 +18,7 @@ public:
     TrackMetadata GetTrackMetadata(int index);
 
 private:
-    CListViewCtrl m_listView;
+    CListViewCtrl& m_listView;
     std::vector<ColumnInfo> m_columns;
     CSize m_currentSize;
     CPoint m_currentPosition;

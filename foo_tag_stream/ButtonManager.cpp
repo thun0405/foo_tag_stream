@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "ButtonManager.h"
 
-ButtonManager::ButtonManager(CButton button, CWindow* window)
+ButtonManager::ButtonManager(CButton& button, CWindow* window)
     : m_button(button)
 {
     // ボタンの現在の位置とサイズを取得
