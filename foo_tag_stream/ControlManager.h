@@ -10,6 +10,7 @@ public:
 
 protected:
     CWindow& m_control;
+    CWindow* m_window;
     CSize m_currentSize;
     CPoint m_currentPosition;
 };

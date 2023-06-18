@@ -2,16 +2,8 @@
 #include "ListViewManager.h"
 
 ListViewManager::ListViewManager(CListViewCtrl& listView, CWindow* window)
-    : m_listView(listView)
+    : m_listView(listView), m_controlManager(listView, window)
 {
-    // リストビューコントロールの現在の位置とサイズを取得
-    CRect rect;
-    m_listView.GetWindowRect(&rect);
-    window->ScreenToClient(&rect);
-
-    m_currentSize = rect.Size();
-    m_currentPosition = rect.TopLeft();
-
     m_columns.push_back({ _T("#"), 30, [](int index, const file_info_impl& info) { return pfc::string8(pfc::format_int(index + 1)); } });
     m_columns.push_back({ _T("Title"), 200, [](int index, const file_info_impl& info) { return info.meta_get("TITLE", 0); } });
     m_columns.push_back({ _T("Artist"), 200, [](int index, const file_info_impl& info) { return info.meta_get("ARTIST", 0); } });
@@ -27,17 +19,7 @@ void ListViewManager::InitializeListView() {
 }
 
 void ListViewManager::UpdateSize(int diffWidth, int diffHeight) {
-    // 新しいリストビューコントロールの幅と高さを計算
-    int listViewWidth = m_currentSize.cx + diffWidth;
-    int listViewHeight = m_currentSize.cy + diffHeight;
-
-    // リストビューコントロールのサイズを変更
-    m_listView.MoveWindow(m_currentPosition.x, m_currentPosition.y, listViewWidth, listViewHeight, TRUE);
-    m_listView.Invalidate();
-
-    // 新しいサイズを保存
-    m_currentSize.cx = listViewWidth;
-    m_currentSize.cy = listViewHeight;
+    m_controlManager.UpdateSize(diffWidth, diffHeight);
 }
 
 void ListViewManager::PopulateListView(const metadb_handle_list& tracks, const pfc::string8& albumName) {

@@ -1,5 +1,6 @@
 #pragma once
 #include "stdafx.h"
+#include "ControlManager.h"
 #include "TrackMetadata.h"
 
 class ListViewManager {
@@ -19,7 +20,6 @@ public:
 
 private:
     CListViewCtrl& m_listView;
+    ControlManager m_controlManager;
     std::vector<ColumnInfo> m_columns;
-    CSize m_currentSize;
-    CPoint m_currentPosition;
 };

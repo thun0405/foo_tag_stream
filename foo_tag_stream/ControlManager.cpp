@@ -2,12 +2,12 @@
 #include "ControlManager.h"
 
 ControlManager::ControlManager(CWindow& control, CWindow* window)
-    : m_control(control)
+    : m_control(control), m_window(window)
 {
     // コントロールの現在の位置とサイズを取得
     CRect rect;
     m_control.GetWindowRect(&rect);
-    window->ScreenToClient(&rect);
+    m_window->ScreenToClient(&rect);
 
     m_currentSize = rect.Size();
     m_currentPosition = rect.TopLeft();
