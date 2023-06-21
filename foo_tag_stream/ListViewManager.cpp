@@ -10,7 +10,8 @@ ListViewManager::ListViewManager(CListViewCtrl& listView, CWindow* window)
     m_columns.push_back({ _T("Album"), 200, [](int index, const file_info_impl& info) { return info.meta_get("ALBUM", 0); } });
 }
 
-void ListViewManager::InitializeListView() {
+void ListViewManager::InitializeListView()
+{
     // ƒJƒ‰ƒ€‚ð’Ç‰Á
     for (size_t i = 0; i < m_columns.size(); ++i) {
         const ColumnInfo& column = m_columns[i];
@@ -18,11 +19,13 @@ void ListViewManager::InitializeListView() {
     }
 }
 
-void ListViewManager::UpdateSize(int diffWidth, int diffHeight) {
+void ListViewManager::UpdateSize(int diffWidth, int diffHeight)
+{
     m_controlManager.UpdateSize(diffWidth, diffHeight);
 }
 
-void ListViewManager::PopulateListView(const metadb_handle_list& tracks, const pfc::string8& albumName) {
+void ListViewManager::PopulateListView(const metadb_handle_list& tracks, const pfc::string8& albumName)
+{
     for (size_t i = 0; i < tracks.get_count(); ++i) {
         const metadb_handle_ptr& track = tracks[i];
         file_info_impl info;
@@ -43,7 +46,8 @@ void ListViewManager::PopulateListView(const metadb_handle_list& tracks, const p
 }
 
 
-TrackMetadata ListViewManager::GetTrackMetadata(int index) {
+TrackMetadata ListViewManager::GetTrackMetadata(int index)
+{
     wchar_t buffer[256];
 
     m_listView.GetItemText(index, 0, buffer, sizeof(buffer) / sizeof(wchar_t));

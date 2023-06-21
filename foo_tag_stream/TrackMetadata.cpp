@@ -13,18 +13,22 @@ TrackMetadata::TrackMetadata(
     m_album(album) 
 {}
 
-int TrackMetadata::GetNumber() const {
+int TrackMetadata::GetNumber() const
+{
     return m_number;
 }
 
-pfc::string8 TrackMetadata::GetTitle() const {
+pfc::string8 TrackMetadata::GetTitle() const
+{
     return m_title;
 }
 
-pfc::string8 TrackMetadata::GetArtist() const {
+pfc::string8 TrackMetadata::GetArtist() const
+{
     return m_artist;
 }
 
-pfc::string8 TrackMetadata::GetAlbum() const {
+pfc::string8 TrackMetadata::GetAlbum() const
+{
     return m_album;
 }

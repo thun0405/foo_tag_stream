@@ -13,7 +13,8 @@ ControlManager::ControlManager(CWindow& control, CWindow* window)
     m_currentPosition = rect.TopLeft();
 }
 
-void ControlManager::UpdateSize(int diffWidth, int diffHeight) {
+void ControlManager::UpdateSize(int diffWidth, int diffHeight)
+{
     // 新しいコントロールの幅と高さを計算
     int controlWidth = m_currentSize.cx + diffWidth;
     int controlHeight = m_currentSize.cy + diffHeight;
@@ -27,7 +28,8 @@ void ControlManager::UpdateSize(int diffWidth, int diffHeight) {
     m_currentSize.cy = controlHeight;
 }
 
-void ControlManager::UpdatePosition(int diffWidth, int diffHeight) {
+void ControlManager::UpdatePosition(int diffWidth, int diffHeight)
+{
     // コントロールの新しい位置を計算
     int controlX = diffWidth + m_currentPosition.x;
     int controlY = diffHeight + m_currentPosition.y;

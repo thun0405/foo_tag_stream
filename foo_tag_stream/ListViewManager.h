@@ -3,9 +3,11 @@
 #include "ControlManager.h"
 #include "TrackMetadata.h"
 
-class ListViewManager {
+class ListViewManager
+{
 public:
-    struct ColumnInfo {
+    struct ColumnInfo
+    {
         const TCHAR* name;
         int width;
         std::function<pfc::string8(int, const file_info_impl&)> dataGetter;

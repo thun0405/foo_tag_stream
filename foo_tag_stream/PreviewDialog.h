@@ -1,7 +1,7 @@
 #pragma once
-
 #include "stdafx.h"
 #include "resource.h"
+#include "SizeInfo.h"
 
 class PreviewDialog : public CDialogImpl<PreviewDialog>
 {
@@ -30,8 +30,7 @@ private:
     CListViewCtrl m_listView;
     CButton m_okButton;
     CButton m_cancelButton;
-    CSize m_size;
-    CSize m_initialSize;
+    SizeInfo m_sizeInfo;
 };
 
 void ShowPreviewDialog(metadb_handle_list m_tracks, pfc::string8 albumName);

@@ -2,7 +2,8 @@
 #include "stdafx.h"
 #include "ControlManager.h"
 
-class ButtonManager {
+class ButtonManager
+{
 public:
     ButtonManager(CButton& button, CWindow* window);
 

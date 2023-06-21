@@ -4,11 +4,13 @@
 #include "ListViewManager.h"
 #include "ButtonManager.h"
 
-class file_info_filter_impl : public file_info_filter {
+class file_info_filter_impl : public file_info_filter
+{
 public:
 	file_info_filter_impl(const file_info& source) : m_source(source) {}
 
-	bool apply_filter(trackRef p_location, t_filestats p_stats, file_info& p_info) override {
+	bool apply_filter(trackRef p_location, t_filestats p_stats, file_info& p_info) override
+	{
 		p_info = m_source;
 		return true;
 	}
@@ -18,7 +20,8 @@ private:
 };
 
 PreviewDialog::PreviewDialog(metadb_handle_list_cref tracks, const pfc::string8& albumName)
-	: m_tracks(tracks), m_albumName(albumName) {}
+	: m_tracks(tracks), m_albumName(albumName)
+{}
 
 LRESULT PreviewDialog::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/)
 {
@@ -29,11 +32,9 @@ LRESULT PreviewDialog::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*l
 	// ダイアログボックスの初期サイズを取得してm_sizeに設定
 	CRect rect;
 	GetClientRect(&rect);
-	m_size = rect.Size();
-	m_initialSize = rect.Size();
+	m_sizeInfo = SizeInfo(rect.Size());
 
 	ListViewManager listViewManager = ListViewManager(m_listView, this);
-
 	listViewManager.InitializeListView();
 	listViewManager.PopulateListView(m_tracks, m_albumName);
 
@@ -42,12 +43,9 @@ LRESULT PreviewDialog::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*l
 
 LRESULT PreviewDialog::OnSize(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, BOOL& /*bHandled*/)
 {
-	// 新しいダイアログボックスの幅と高さを取得
-	int newWidth = LOWORD(lParam);
-	int newHeight = HIWORD(lParam);
-
-	int diffWidth = newWidth - m_size.cx;
-	int diffHeight = newHeight - m_size.cy;
+	m_sizeInfo.OnSize(CSize(LOWORD(lParam), HIWORD(lParam)));
+	int diffWidth = m_sizeInfo.DiffWidth();
+	int diffHeight = m_sizeInfo.DiffHeight();
 
 	ListViewManager listViewManager = ListViewManager(m_listView, this);
 	ButtonManager okButtonManager = ButtonManager(m_okButton, this);
@@ -60,19 +58,16 @@ LRESULT PreviewDialog::OnSize(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, B
 	okButtonManager.UpdatePosition(diffWidth, diffHeight);
 	cancelButtonManager.UpdatePosition(diffWidth, diffHeight);
 
-	// 新しいサイズを保存
-	m_size.cx = newWidth;
-	m_size.cy = newHeight;
-
 	return 0;
 }
 
 
 LRESULT PreviewDialog::OnGetMinMaxInfo(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, BOOL& /*bHandled*/)
 {
+	CSize initSize = m_sizeInfo.GetInitSize();
 	MINMAXINFO* pMinMax = (MINMAXINFO*)lParam;
-	pMinMax->ptMinTrackSize.x = m_initialSize.cx;
-	pMinMax->ptMinTrackSize.y = m_initialSize.cy;
+	pMinMax->ptMinTrackSize.x = initSize.cx;
+	pMinMax->ptMinTrackSize.y = initSize.cy;
 
 	return 0;
 }
