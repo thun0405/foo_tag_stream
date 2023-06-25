@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "Guids.h"  // Include the new header file
-#include "HelloWorld.h"
+//#include "HelloWorld.h"
 #include "PreviewDialog.h"
-#include "AlbumDialog.h"
+//#include "AlbumDialog.h"
+#include "MainDialog.h"
 
 // Identifier of our context menu group. Substitute with your own when reusing code.
 static contextmenu_group_popup_factory g_mygroup(guid_mygroup, contextmenu_groups::root, "Tag Stream", 0);
@@ -15,7 +16,7 @@ struct CommandInfo {
 
 static const CommandInfo commands[] = {
     {
-        "Album Dialog", 
+        "Main Dialog", 
         "This is the first command.", 
         guid_first 
     },
@@ -29,7 +30,7 @@ static const CommandInfo commands[] = {
 typedef void (*CommandFunc)(metadb_handle_list_cref p_data);
 
 void FirstCommand(metadb_handle_list_cref p_data) {
-    ShowAlbumDialog(p_data);
+    ShowMainDialog();
 }
 
 void SecondCommand(metadb_handle_list_cref p_data) {

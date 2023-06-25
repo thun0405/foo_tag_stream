@@ -23,6 +23,7 @@
     <ClCompile Include="ButtonManager.cpp" />
     <ClCompile Include="contextmenu.cpp" />
     <ClCompile Include="ControlManager.cpp" />
+    <ClCompile Include="MainDialog.cpp" />
     <ClCompile Include="SizeInfo.cpp" />
     <ClCompile Include="foo_tag_stream.cpp" />
     <ClCompile Include="HelloWorld.cpp" />
@@ -36,6 +37,7 @@
     <ClInclude Include="AlbumDialog.h" />
     <ClInclude Include="ButtonManager.h" />
     <ClInclude Include="ControlManager.h" />
+    <ClInclude Include="MainDialog.h" />
     <ClInclude Include="SizeInfo.h" />
     <ClInclude Include="foo_tag_stream.h" />
     <ClInclude Include="Guids.h" />

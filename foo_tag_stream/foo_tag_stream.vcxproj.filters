@@ -63,6 +63,9 @@
     <ClCompile Include="SizeInfo.cpp">
       <Filter>ソース ファイル\ui</Filter>
     </ClCompile>
+    <ClCompile Include="MainDialog.cpp">
+      <Filter>ソース ファイル\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -99,6 +102,9 @@
       <Filter>ヘッダー ファイル\ui</Filter>
     </ClInclude>
     <ClInclude Include="SizeInfo.h">
+      <Filter>ヘッダー ファイル\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="MainDialog.h">
       <Filter>ヘッダー ファイル\ui</Filter>
     </ClInclude>
   </ItemGroup>
