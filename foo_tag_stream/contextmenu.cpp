@@ -4,6 +4,7 @@
 #include "PreviewDialog.h"
 //#include "AlbumDialog.h"
 #include "MainDialog.h"
+#include "MainWindow.h"
 
 // Identifier of our context menu group. Substitute with your own when reusing code.
 static contextmenu_group_popup_factory g_mygroup(guid_mygroup, contextmenu_groups::root, "Tag Stream", 0);
@@ -30,7 +31,8 @@ static const CommandInfo commands[] = {
 typedef void (*CommandFunc)(metadb_handle_list_cref p_data);
 
 void FirstCommand(metadb_handle_list_cref p_data) {
-    ShowMainDialog();
+    ShowMainDialog(p_data);
+    //ShowMainWindow();
 }
 
 void SecondCommand(metadb_handle_list_cref p_data) {
