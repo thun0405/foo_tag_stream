@@ -7,8 +7,12 @@ public:
     DECLARE_WND_CLASS(NULL)
 
     BEGIN_MSG_MAP(TabContent2)
-        MESSAGE_HANDLER(WM_PAINT, OnPaint)
+        MESSAGE_HANDLER(WM_CREATE, OnCreate)
+        //MESSAGE_HANDLER(WM_PAINT, OnPaint)
     END_MSG_MAP()
 
-    LRESULT OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+    LRESULT OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+    //LRESULT OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+private:
+    CEdit m_edit;
 };
