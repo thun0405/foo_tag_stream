@@ -20,7 +20,7 @@ LRESULT TabContent1::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHa
 
     ListViewManager listViewManager = ListViewManager(m_listView, this);
     listViewManager.InitializeListView();
-    listViewManager.PopulateListView(m_tracks, "");;
+    listViewManager.PopulateListView(m_tracks);;
 
     return 0;
 }

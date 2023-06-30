@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "MainDialog.h"
+#include <TrackMetadataList.h>
 
 MainDialog::MainDialog(metadb_handle_list_cref p_data)
     : m_tabContent1(p_data), m_tracks(p_data)
@@ -9,20 +10,37 @@ MainDialog::MainDialog(metadb_handle_list_cref p_data)
 
 LRESULT MainDialog::OnInitDialog(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 {
+    // タブコントロールの取得
     m_tab = GetDlgItem(IDC_TAB);
 
-    m_tab.InsertItem(0, _T("Tab 1"));
-    m_tab.InsertItem(1, _T("Tab 2"));
+    // タブの追加
+    m_tab.InsertItem(0, _T("Tab1"));
+    m_tab.InsertItem(1, _T("Tab2"));
+
+    // 各タブコンテンツの作成と位置調整
+    m_tabContent1.Create(m_tab.m_hWnd);
+    m_tabContent2.Create(m_tab.m_hWnd);
 
     CRect rect;
     m_tab.GetClientRect(&rect);
-    rect.DeflateRect(5, 25, 5, 5);
+    rect.DeflateRect(5, 25, 5, 5);  // タブの位置に合わせて調整
 
-    m_tabContent1.Create(m_tab.m_hWnd, rect, NULL, WS_CHILD | WS_VISIBLE);
-    m_tabContent2.Create(m_tab.m_hWnd, rect, NULL, WS_CHILD);
+    m_tabContent1.MoveWindow(&rect);
+    m_tabContent2.MoveWindow(&rect);
+
+    // 初期表示はTabContent1
+    m_tabContent2.ShowWindow(SW_HIDE);
+
+    // 選択したトラックのメタデータをCSV形式に変換
+    TrackMetadataList metadataList = TrackMetadataList(m_tracks);
+    pfc::string8 csv = metadataList.ConvertToCsv();
+
+    // CSVをエディットコントロールに設定
+    m_tabContent2.SetEditText(csv.c_str());
 
     return TRUE;
 }
+
 
 LRESULT MainDialog::OnTabSelChange(int idCtrl, LPNMHDR pnmh, BOOL& bHandled)
 {
