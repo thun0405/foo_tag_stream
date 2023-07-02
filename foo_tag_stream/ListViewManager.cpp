@@ -24,7 +24,7 @@ void ListViewManager::UpdateSize(int diffWidth, int diffHeight)
     m_controlManager.UpdateSize(diffWidth, diffHeight);
 }
 
-void ListViewManager::PopulateListView(const metadb_handle_list& tracks, const pfc::string8& albumName)
+void ListViewManager::PopulateListView(const metadb_handle_list& tracks)
 {
     for (size_t i = 0; i < tracks.get_count(); ++i) {
         const metadb_handle_ptr& track = tracks[i];

@@ -21,6 +21,9 @@ LRESULT MainDialog::OnInitDialog(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& 
     m_tabContent1.Create(m_tab.m_hWnd, rect, NULL, WS_CHILD | WS_VISIBLE);
     m_tabContent2.Create(m_tab.m_hWnd, rect, NULL, WS_CHILD);
 
+    m_tabContent1.MoveWindow(&rect);
+    m_tabContent2.MoveWindow(&rect);
+
     return TRUE;
 }
 

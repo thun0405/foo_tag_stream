@@ -15,12 +15,12 @@ LRESULT TabContent1::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHa
     m_listView.Create(m_hWnd, &rect, NULL, WS_CHILD | WS_VISIBLE | LVS_REPORT);
 
     // リストビューにカラムを追加
-    m_listView.InsertColumn(0, _T("Column 1"), LVCFMT_LEFT, 100);
-    m_listView.InsertColumn(1, _T("Column 2"), LVCFMT_LEFT, 100);
+    //m_listView.InsertColumn(0, _T("Column 1"), LVCFMT_LEFT, 100);
+    //m_listView.InsertColumn(1, _T("Column 2"), LVCFMT_LEFT, 100);
 
     ListViewManager listViewManager = ListViewManager(m_listView, this);
     listViewManager.InitializeListView();
-    listViewManager.PopulateListView(m_tracks, "");;
+    listViewManager.PopulateListView(m_tracks);
 
     return 0;
 }

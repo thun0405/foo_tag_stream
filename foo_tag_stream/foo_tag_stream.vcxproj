@@ -35,6 +35,7 @@
     <ClCompile Include="TabContent1.cpp" />
     <ClCompile Include="TabContent2.cpp" />
     <ClCompile Include="TrackMetadata.cpp" />
+    <ClCompile Include="TrackMetadataList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AlbumDialog.h" />
@@ -53,6 +54,7 @@
     <ClInclude Include="TabContent1.h" />
     <ClInclude Include="TabContent2.h" />
     <ClInclude Include="TrackMetadata.h" />
+    <ClInclude Include="TrackMetadataList.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="foo_tag_stream.rc" />

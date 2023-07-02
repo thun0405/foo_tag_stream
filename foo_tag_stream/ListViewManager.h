@@ -17,7 +17,7 @@ public:
 
     void InitializeListView();
     void UpdateSize(int diffWidth, int diffHeight);
-    void PopulateListView(const metadb_handle_list& tracks, const pfc::string8& albumName);
+    void PopulateListView(const metadb_handle_list& tracks);
     TrackMetadata GetTrackMetadata(int index);
 
 private:

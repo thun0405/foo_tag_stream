@@ -19,6 +19,11 @@ LRESULT TabContent2::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHa
     return 0;
 }
 
+void TabContent2::SetEditText(const char* text)
+{
+    m_edit.SetWindowText(CA2T(text));
+}
+
 //LRESULT TabContent2::OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 //{
 //    PAINTSTRUCT ps;

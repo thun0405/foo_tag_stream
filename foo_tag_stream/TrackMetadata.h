@@ -9,11 +9,14 @@ public:
         pfc::string8 artist,
         pfc::string8 album
     );
+    TrackMetadata(metadb_handle_ptr track);
+    TrackMetadata();
 
     int GetNumber() const;
     pfc::string8 GetTitle() const;
     pfc::string8 GetArtist() const;
     pfc::string8 GetAlbum() const;
+    pfc::string8 ConvertToCSV() const;
 
 private:
     int m_number;
