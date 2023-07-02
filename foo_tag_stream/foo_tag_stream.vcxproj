@@ -40,6 +40,7 @@
   <ItemGroup>
     <ClInclude Include="AlbumDialog.h" />
     <ClInclude Include="ButtonManager.h" />
+    <ClInclude Include="constants.h" />
     <ClInclude Include="ControlManager.h" />
     <ClInclude Include="MainDialog.h" />
     <ClInclude Include="MainWindow.h" />

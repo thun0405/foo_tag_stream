@@ -1,3 +1,4 @@
+#pragma once
 #include <helpers/foobar2000+atl.h>
 
 #include <atlbase.h>
@@ -9,4 +10,4 @@
 #include <atlcom.h>
 #include <atlcrack.h>
 
-#include <libPPUI/CListControl.h>
+//#include <libPPUI/CListControl.h>

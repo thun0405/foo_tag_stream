@@ -55,7 +55,7 @@ pfc::string8 TrackMetadata::ConvertToCSV() const
     appendField(csv, m_title);
     appendField(csv, m_artist);
     appendField(csv, m_album);
-    csv << "\n";  // ––”ö‚É‰üs‚ð’Ç‰Á
+    //csv << "\n";  // ––”ö‚É‰üs‚ð’Ç‰Á
 
     return csv;
 }

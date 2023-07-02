@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "TrackMetadataList.h"
 #include <SDK/file_info_filter_impl.h>
+#include <constants.h>
 
 TrackMetadataList::TrackMetadataList(metadb_handle_list_cref tracks)
 {
@@ -61,12 +62,12 @@ pfc::string8 TrackMetadataList::ConvertToCsv() const
     pfc::string8 csv;
 
     // ヘッダー行を追加
-    csv << "Number,Title,Artist,Album\n";
+    csv << "Title,Artist,Album" << NEWLINE;
 
     // 各トラックのメタデータをCSV形式に変換して追加
     for (size_t i = 0; i < m_list.get_count(); ++i) {
         const TrackMetadata& metadata = m_list[i];
-        csv << metadata.ConvertToCSV();
+        csv << metadata.ConvertToCSV() << NEWLINE;
     }
 
     return csv;

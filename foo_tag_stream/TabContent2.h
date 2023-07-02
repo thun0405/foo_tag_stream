@@ -8,7 +8,6 @@ public:
 
     BEGIN_MSG_MAP(TabContent2)
         MESSAGE_HANDLER(WM_CREATE, OnCreate)
-        //MESSAGE_HANDLER(WM_PAINT, OnPaint)
     END_MSG_MAP()
 
     LRESULT OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
