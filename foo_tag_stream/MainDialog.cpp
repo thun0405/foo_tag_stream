@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "MainDialog.h"
+#include "TrackMetadataList.h"
 
 MainDialog::MainDialog(metadb_handle_list_cref p_data)
     : m_tabContent1(p_data), m_tracks(p_data)
@@ -23,6 +24,13 @@ LRESULT MainDialog::OnInitDialog(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& 
 
     m_tabContent1.MoveWindow(&rect);
     m_tabContent2.MoveWindow(&rect);
+
+    // 選択したトラックのメタデータをCSV形式に変換
+    TrackMetadataList metadataList = TrackMetadataList(m_tracks);
+    pfc::string8 csv = metadataList.ConvertToCsv();
+
+    // CSVをエディットコントロールに設定
+    m_tabContent2.SetEditText(csv.c_str());
 
     return TRUE;
 }

@@ -50,8 +50,8 @@ TrackMetadata ListViewManager::GetTrackMetadata(int index)
 {
     wchar_t buffer[256];
 
-    m_listView.GetItemText(index, 0, buffer, sizeof(buffer) / sizeof(wchar_t));
-    int number = _wtoi(buffer);  // Convert string to integer
+    //m_listView.GetItemText(index, 0, buffer, sizeof(buffer) / sizeof(wchar_t));
+    //int number = _wtoi(buffer);  // Convert string to integer
 
     m_listView.GetItemText(index, 1, buffer, sizeof(buffer) / sizeof(wchar_t));
     pfc::string8 title = pfc::stringcvt::string_utf8_from_os(buffer).get_ptr();
@@ -62,5 +62,5 @@ TrackMetadata ListViewManager::GetTrackMetadata(int index)
     m_listView.GetItemText(index, 3, buffer, sizeof(buffer) / sizeof(wchar_t));
     pfc::string8 album = pfc::stringcvt::string_utf8_from_os(buffer).get_ptr();
 
-    return TrackMetadata(number, title, artist, album);
+    return TrackMetadata(title, artist, album);
 }

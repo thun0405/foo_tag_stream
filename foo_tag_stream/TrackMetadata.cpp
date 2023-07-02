@@ -3,12 +3,10 @@
 #include <future>
 
 TrackMetadata::TrackMetadata(
-    int number,
     pfc::string8 title,
     pfc::string8 artist,
     pfc::string8 album
 ) : 
-    m_number(number), 
     m_title(title), 
     m_artist(artist), 
     m_album(album) 
@@ -18,31 +16,18 @@ TrackMetadata::TrackMetadata(metadb_handle_ptr track)
 {
     // metadb_handle_ptrが有効なポインタであることを確認
     if (track.is_valid()) {
-        // 非同期タスクを作成
-        std::future<file_info_impl> future = std::async(std::launch::async, [&]() {
-            file_info_impl info;
-            track->get_info_async(info);
-            return info;
-            });
-
-        // 非同期タスクが完了するまで待機
-        file_info_impl info = future.get();
-
-        // メタデータを取得
-        m_number = info.info_get_int("tracknumber");
-        m_title = info.info_get("title");
-        m_artist = info.info_get("artist");
-        m_album = info.info_get("album");
+        file_info_impl info;
+        if (track->get_info_async(info)) {
+            // メタデータを取得
+            m_title = info.meta_get("TITLE", 0);
+            m_artist = info.meta_get("ARTIST", 0);
+            m_album = info.meta_get("ALBUM", 0);
+        }
     }
 }
 
 TrackMetadata::TrackMetadata()
 {
-}
-
-int TrackMetadata::GetNumber() const
-{
-    return m_number;
 }
 
 pfc::string8 TrackMetadata::GetTitle() const
@@ -67,7 +52,6 @@ pfc::string8 TrackMetadata::ConvertToCSV() const
     };
 
     pfc::string8 csv;
-    csv << m_number << ",";
     appendField(csv, m_title);
     appendField(csv, m_artist);
     appendField(csv, m_album);
