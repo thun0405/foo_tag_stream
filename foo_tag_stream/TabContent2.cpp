@@ -8,7 +8,7 @@ LRESULT TabContent2::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHa
     GetClientRect(&rect);
 
     // エディットコントロールの作成
-    m_edit.Create(m_hWnd, &rect, NULL, WS_CHILD | WS_VISIBLE | WS_VSCROLL | ES_MULTILINE | ES_AUTOVSCROLL);
+    m_edit.Create(m_hWnd, &rect, NULL, WS_CHILD | WS_VISIBLE | WS_VSCROLL | ES_MULTILINE | ES_WANTRETURN | ES_AUTOVSCROLL);
 
     // フォントの作成
     HFONT hFont = CreateFont(16, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, _T("Arial"));
