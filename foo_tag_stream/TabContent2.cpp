@@ -23,3 +23,8 @@ void TabContent2::SetEditText(const char* text)
 {
     m_edit.SetWindowText(CA2W(text, CP_UTF8));
 }
+
+pfc::string8 TabContent2::GetEditText()
+{
+    return pfc::string8();
+}

@@ -6,7 +6,7 @@
 class PreviewDialog : public CDialogImpl<PreviewDialog>
 {
 public:
-    enum { IDD = IDD_PREVIEW };
+    enum { IDD = IDD_PREVIEW_DIALOG };
 
     PreviewDialog(metadb_handle_list_cref tracks, const pfc::string8& albumName);
 

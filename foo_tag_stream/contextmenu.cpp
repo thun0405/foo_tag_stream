@@ -1,8 +1,6 @@
 #include "stdafx.h"
-#include "Guids.h"  // Include the new header file
-//#include "HelloWorld.h"
+#include "Guids.h"
 #include "PreviewDialog.h"
-//#include "AlbumDialog.h"
 #include "MainDialog.h"
 #include "MainWindow.h"
 
@@ -32,7 +30,6 @@ typedef void (*CommandFunc)(metadb_handle_list_cref p_data);
 
 void FirstCommand(metadb_handle_list_cref p_data) {
     ShowMainDialog(p_data);
-    //ShowMainWindow();
 }
 
 void SecondCommand(metadb_handle_list_cref p_data) {

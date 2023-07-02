@@ -11,8 +11,9 @@ public:
     END_MSG_MAP()
 
     LRESULT OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-    //LRESULT OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+
     void SetEditText(const char* text);
+    pfc::string8 GetEditText();
 private:
     CEdit m_edit;
 };
