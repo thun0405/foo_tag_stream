@@ -13,6 +13,9 @@ LRESULT TabContent1::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHa
     GetClientRect(&rect);
     m_listView.Create(m_hWnd, &rect, NULL, WS_CHILD | WS_VISIBLE | LVS_REPORT);
 
+    ListViewManager listViewManager = ListViewManager(m_listView, this);
+    listViewManager.InitializeListView();
+
     return 0;
 }
 
@@ -29,6 +32,5 @@ LRESULT TabContent1::OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHand
 void TabContent1::UpdateListView(TrackMetadataList& metadataList)
 {
     ListViewManager listViewManager = ListViewManager(m_listView, this);
-    listViewManager.InitializeListView();
     listViewManager.UpdateListView(metadataList);
 }

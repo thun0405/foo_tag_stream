@@ -26,6 +26,8 @@ void ListViewManager::UpdateSize(int diffWidth, int diffHeight)
 
 void ListViewManager::UpdateListView(const TrackMetadataList& metadataList)
 {
+    // Delete all items from the list view
+    m_listView.DeleteAllItems();
     for (size_t i = 0; i < metadataList.GetCount(); ++i) {
         // Insert a new item for the first column
         const ColumnInfo& firstColumn = m_columns[0];

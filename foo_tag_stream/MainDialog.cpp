@@ -25,7 +25,7 @@ LRESULT MainDialog::OnInitDialog(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& 
     m_tabContent2.MoveWindow(&rect);
 
     // 選択したトラックのメタデータをCSV形式に変換
-    pfc::string8 csv = m_metadataList.ConvertToCsv();
+    pfc::string8 csv = m_metadataList.ToCsv();
 
     m_tabContent1.UpdateListView(m_metadataList);
 
@@ -105,7 +105,10 @@ void MainDialog::OnCsvSwitchTab2()
 {
     // テキストボックスからテキストを取得
     pfc::string8 csv = m_tabContent2.GetEditText();
-
     // CSVテキストを解析してメタデータリストを更新
-    m_metadataList.FromCSV(csv);
+    TrackMetadataList metadataList;
+    metadataList.FromCSV(csv);
+    m_metadataList = metadataList;
+    // Tab1のリストビューを更新
+    m_tabContent1.UpdateListView(m_metadataList);
 }

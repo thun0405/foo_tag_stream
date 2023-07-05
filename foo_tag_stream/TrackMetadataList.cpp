@@ -57,7 +57,7 @@ void TrackMetadataList::ApplyToTracks(const metadb_handle_list& tracks) {
     api->update_info_async(tracks, new service_impl_t<file_info_filter_impl>(tracks, newInfos), nullptr, metadb_io_v2::op_flag_delay_ui, nullptr);
 }
 
-pfc::string8 TrackMetadataList::ConvertToCsv() const
+pfc::string8 TrackMetadataList::ToCsv() const
 {
     pfc::string8 csv;
 
@@ -90,9 +90,9 @@ void TrackMetadataList::FromCSV(const pfc::string8& csv)
             // TrackMetadataオブジェクトを作成してリストに追加
             TrackMetadata metadata;
             //metadata.SetNumber(atoi(fields[0]));
-            metadata.SetTitle(fields[1]);
-            metadata.SetArtist(fields[2]);
-            metadata.SetAlbum(fields[3]);
+            metadata.SetTitle(fields[0]);
+            metadata.SetArtist(fields[1]);
+            metadata.SetAlbum(fields[2]);
             m_list.add_item(metadata);
         }
     }
