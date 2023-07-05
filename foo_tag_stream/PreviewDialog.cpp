@@ -36,7 +36,7 @@ LRESULT PreviewDialog::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*l
 
 	ListViewManager listViewManager = ListViewManager(m_listView, this);
 	listViewManager.InitializeListView();
-	listViewManager.PopulateListView(m_tracks);
+	listViewManager.UpdateListView(TrackMetadataList(m_tracks));
 
 	return TRUE;
 }

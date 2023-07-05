@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "ControlManager.h"
 #include "TrackMetadata.h"
+#include "TrackMetadataList.h"
 
 class ListViewManager
 {
@@ -10,14 +11,15 @@ public:
     {
         const TCHAR* name;
         int width;
-        std::function<pfc::string8(int, const file_info_impl&)> dataGetter;
+        std::function<pfc::string8(int, const TrackMetadataList&)> dataGetter;
     };
 
     ListViewManager(CListViewCtrl& listView, CWindow* window);
 
     void InitializeListView();
     void UpdateSize(int diffWidth, int diffHeight);
-    void PopulateListView(const metadb_handle_list& tracks);
+    //void PopulateListView(const metadb_handle_list& tracks);
+    void UpdateListView(const TrackMetadataList& metadataList);
     TrackMetadata GetTrackMetadata(int index);
 
 private:

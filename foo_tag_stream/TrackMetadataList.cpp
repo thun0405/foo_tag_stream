@@ -72,3 +72,28 @@ pfc::string8 TrackMetadataList::ConvertToCsv() const
 
     return csv;
 }
+
+void TrackMetadataList::FromCSV(const pfc::string8& csv)
+{
+    // 入力を行に分割
+    pfc::list_t<pfc::string8> lines;
+    splitStringByLines(lines, csv);
+
+    // 各行を解析
+    for (size_t i = 0; i < lines.get_count(); ++i) {
+        // 行をカンマで分割
+        pfc::list_t<pfc::string8> fields;
+        splitStringByChar(fields, lines[i], ',');
+
+        // 必要なフィールド数があることを確認
+        if (fields.get_count() >= 4) {
+            // TrackMetadataオブジェクトを作成してリストに追加
+            TrackMetadata metadata;
+            //metadata.SetNumber(atoi(fields[0]));
+            metadata.SetTitle(fields[1]);
+            metadata.SetArtist(fields[2]);
+            metadata.SetAlbum(fields[3]);
+            m_list.add_item(metadata);
+        }
+    }
+}

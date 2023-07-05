@@ -13,6 +13,7 @@ public:
     size_t GetCount() const;
     void ApplyToTracks(const metadb_handle_list& tracks);
     pfc::string8 ConvertToCsv() const;
+    void FromCSV(const pfc::string8& csv);
 
 private:
     pfc::list_t<TrackMetadata> m_list;

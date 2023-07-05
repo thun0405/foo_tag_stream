@@ -26,5 +26,17 @@ void TabContent2::SetEditText(const char* text)
 
 pfc::string8 TabContent2::GetEditText()
 {
-    return pfc::string8();
+    // テキストボックスからテキストを取得
+    int length = m_edit.GetWindowTextLength();
+    TCHAR* buffer = new TCHAR[length + 1];
+    m_edit.GetWindowText(buffer, length + 1);
+
+    // 取得したテキストをpfc::string8に変換
+    pfc::string8 text;
+    text = pfc::stringcvt::string_utf8_from_os(buffer);
+
+    // バッファを削除
+    delete[] buffer;
+
+    return text;
 }

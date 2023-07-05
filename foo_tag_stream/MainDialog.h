@@ -26,6 +26,7 @@ public:
     LRESULT OnCancel(WORD wNotifyCode, WORD wID, HWND hWndCtl, BOOL& bHandled);
     LRESULT OnCsvSwitch(WORD wNotifyCode, WORD wID, HWND hWndCtl, BOOL& bHandled);
 
+    void OnCsvSwitchTab2();
 
 private:
     CTabCtrl m_tab;

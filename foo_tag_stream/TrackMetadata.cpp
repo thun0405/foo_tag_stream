@@ -30,6 +30,20 @@ TrackMetadata::TrackMetadata()
 {
 }
 
+pfc::string8 TrackMetadata::ConvertToCSV() const
+{
+    auto appendField = [](pfc::string8& csv, const pfc::string8& field) {
+        csv << (field.is_empty() ? pfc::string8("") : field) << ",";
+    };
+
+    pfc::string8 csv;
+    appendField(csv, m_title);
+    appendField(csv, m_artist);
+    appendField(csv, m_album);
+
+    return csv;
+}
+
 pfc::string8 TrackMetadata::GetTitle() const
 {
     return m_title;
@@ -45,16 +59,17 @@ pfc::string8 TrackMetadata::GetAlbum() const
     return m_album;
 }
 
-pfc::string8 TrackMetadata::ConvertToCSV() const
+void TrackMetadata::SetTitle(pfc::string8 title)
 {
-    auto appendField = [](pfc::string8& csv, const pfc::string8& field) {
-        csv << (field.is_empty() ? pfc::string8("") : field) << ",";
-    };
+    m_title = title;
+}
 
-    pfc::string8 csv;
-    appendField(csv, m_title);
-    appendField(csv, m_artist);
-    appendField(csv, m_album);
+void TrackMetadata::SetArtist(pfc::string8 artist)
+{
+    m_artist = artist;
+}
 
-    return csv;
+void TrackMetadata::SetAlbum(pfc::string8 album)
+{
+    m_album = album;
 }

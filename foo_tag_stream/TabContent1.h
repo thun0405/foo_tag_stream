@@ -1,10 +1,11 @@
 #pragma once
 #include "stdafx.h"
+#include "TrackMetadataList.h"
 
 class TabContent1 : public CWindowImpl<TabContent1>
 {
 public:
-    TabContent1(metadb_handle_list_cref p_data);
+    TabContent1();
 
     DECLARE_WND_CLASS(NULL)
 
@@ -16,7 +17,9 @@ public:
     LRESULT OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
     LRESULT OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 
+    void UpdateListView(TrackMetadataList& metadataList);
+
 private:
     CListViewCtrl m_listView;  // リストビューのコントロール
-    metadb_handle_list m_tracks;
+    //metadb_handle_list m_tracks;
 };
