@@ -20,6 +20,5 @@ public:
     void UpdateListView(TrackMetadataList& metadataList);
 
 private:
-    CListViewCtrl m_listView;  // リストビューのコントロール
-    //metadb_handle_list m_tracks;
+    CListViewCtrl m_listView;
 };

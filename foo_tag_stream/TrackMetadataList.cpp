@@ -3,6 +3,8 @@
 #include <SDK/file_info_filter_impl.h>
 #include <constants.h>
 
+const pfc::string8 TrackMetadataList::CSV_HEADER = "Title,Artist,Album";
+
 TrackMetadataList::TrackMetadataList(metadb_handle_list_cref tracks)
 {
     for (size_t i = 0; i < tracks.get_count(); i++) {
@@ -62,12 +64,12 @@ pfc::string8 TrackMetadataList::ToCsv() const
     pfc::string8 csv;
 
     // ヘッダー行を追加
-    csv << "Title,Artist,Album" << NEWLINE;
+    csv << CSV_HEADER << NEWLINE;
 
     // 各トラックのメタデータをCSV形式に変換して追加
     for (size_t i = 0; i < m_list.get_count(); ++i) {
         const TrackMetadata& metadata = m_list[i];
-        csv << metadata.ConvertToCSV() << NEWLINE;
+        csv << metadata.ToCSV() << NEWLINE;
     }
 
     return csv;
@@ -79,6 +81,11 @@ void TrackMetadataList::FromCSV(const pfc::string8& csv)
     pfc::list_t<pfc::string8> lines;
     splitStringByLines(lines, csv);
 
+    // ヘッダー行を確認
+    if (lines.get_count() > 0 && lines[0] == CSV_HEADER) {
+        lines.remove_by_idx(0);  // ヘッダー行を削除
+    }
+
     // 各行を解析
     for (size_t i = 0; i < lines.get_count(); ++i) {
         // 行をカンマで分割
@@ -86,10 +93,9 @@ void TrackMetadataList::FromCSV(const pfc::string8& csv)
         splitStringByChar(fields, lines[i], ',');
 
         // 必要なフィールド数があることを確認
-        if (fields.get_count() >= 4) {
+        if (fields.get_count() >= 3) {
             // TrackMetadataオブジェクトを作成してリストに追加
             TrackMetadata metadata;
-            //metadata.SetNumber(atoi(fields[0]));
             metadata.SetTitle(fields[0]);
             metadata.SetArtist(fields[1]);
             metadata.SetAlbum(fields[2]);

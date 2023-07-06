@@ -30,7 +30,7 @@ TrackMetadata::TrackMetadata()
 {
 }
 
-pfc::string8 TrackMetadata::ConvertToCSV() const
+pfc::string8 TrackMetadata::ToCSV() const
 {
     auto appendField = [](pfc::string8& csv, const pfc::string8& field) {
         csv << (field.is_empty() ? pfc::string8("") : field) << ",";
@@ -40,6 +40,9 @@ pfc::string8 TrackMetadata::ConvertToCSV() const
     appendField(csv, m_title);
     appendField(csv, m_artist);
     appendField(csv, m_album);
+
+    // ÅŒã‚ÌƒJƒ“ƒ}‚ðíœ
+    csv.truncate(csv.get_length() - 1);
 
     return csv;
 }

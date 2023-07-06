@@ -4,6 +4,8 @@
 
 class TrackMetadataList {
 public:
+    static const pfc::string8 CSV_HEADER;
+
     TrackMetadataList(metadb_handle_list_cref tracks);
     TrackMetadataList();
 

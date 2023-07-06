@@ -11,7 +11,7 @@ public:
     TrackMetadata(metadb_handle_ptr track);
     TrackMetadata();
 
-    pfc::string8 ConvertToCSV() const;
+    pfc::string8 ToCSV() const;
     // Getter
     pfc::string8 GetTitle() const;
     pfc::string8 GetArtist() const;
